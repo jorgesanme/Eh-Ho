@@ -33,6 +33,11 @@ fun parseTopics(json: String?): List<Topic> = json?.let {
         Topic(
             id = topicJsonObject.getInt("id"),
             title = topicJsonObject.getString("title"),
+            postsCount =  topicJsonObject.getInt("posts_count"),
+            replyCount = topicJsonObject.getInt("views"),
+            lastPostedAt = topicJsonObject.getString("last_posted_at"),
+            imageURL = topicJsonObject.getString("image_url")
+
         )
     }
 } ?: emptyList<Topic>()

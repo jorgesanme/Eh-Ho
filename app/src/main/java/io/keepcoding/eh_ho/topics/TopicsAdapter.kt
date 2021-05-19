@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import io.keepcoding.eh_ho.databinding.ViewTopicBinding
 import io.keepcoding.eh_ho.extensions.inflater
 import io.keepcoding.eh_ho.model.Topic
@@ -35,6 +36,12 @@ class TopicsAdapter(diffUtilItemCallback: DiffUtil.ItemCallback<Topic> = DIFF) :
 
         fun bind(topic: Topic) {
             binding.title.text = topic.title
+            binding.topicCount.text = topic.postsCount.toString()
+            binding.replayCount.text = topic.replyCount.toString()
+            binding.lastPostDate.text = topic.lastPostedAt
+            Picasso.get()
+                .load(topic.imageURL)
+                .into(binding.avatarImage)
         }
     }
 }

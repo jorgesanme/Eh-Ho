@@ -22,7 +22,7 @@ class TopicsActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.topics.apply {
             adapter = topicsAdapter
-            addItemDecoration(DividerItemDecoration(this@TopicsActivity, LinearLayout.VERTICAL))
+//            addItemDecoration(DividerItemDecoration(this@TopicsActivity, LinearLayout.VERTICAL))
         }
         vm.state.observe(this) {
             when (it) {
