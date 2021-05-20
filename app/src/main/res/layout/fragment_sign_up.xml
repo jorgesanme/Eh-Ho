@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/hint_email"
         app:boxBackgroundColor="@color/white"
+        app:endIconMode="clear_text"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -18,8 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:inputType="text"
-            />
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/hint_username"
         app:boxBackgroundColor="@color/white"
+        app:endIconMode="clear_text"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -35,6 +36,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:inputType="text"
+
             />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -43,6 +45,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/hint_password"
         app:boxBackgroundColor="@color/white"
+        app:passwordToggleEnabled="true"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -50,8 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:inputType="text"
-            />
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -59,6 +61,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/hint_confirm_password"
         app:boxBackgroundColor="@color/white"
+        app:passwordToggleEnabled="true"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -66,8 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:inputType="text"
-            />
+            android:inputType="text|textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
