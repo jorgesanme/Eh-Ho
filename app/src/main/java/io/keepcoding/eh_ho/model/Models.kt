@@ -11,5 +11,12 @@ data class Topic(
     val postsCount: Int,
     val replyCount: Int,
     val lastPostedAt: String,
-    val imageURL: String
+    val bumped: Boolean,
+    val pinned: Boolean
+
+)
+data class User(
+    val userId: Int,
+    val userName: String,
+    val userAvatar: String
 )

@@ -12,6 +12,8 @@
         android:hint="@string/hint_username"
         app:boxBackgroundColor="@color/white"
         app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
 
         >
 
@@ -29,6 +31,10 @@
         android:hint="@string/hint_password"
         app:boxBackgroundColor="@color/white"
         app:passwordToggleEnabled="true"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
+
+
         >
 
         <com.google.android.material.textfield.TextInputEditText

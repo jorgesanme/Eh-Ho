@@ -22,6 +22,7 @@ class SignInFragment : Fragment() {
     ): View? = FragmentSignInBinding.inflate(inflater, container, false).apply {
         labelCreateAccount.setOnClickListener {
             vm.moveToSignUp()
+
         }
         vm.signInData.observe(viewLifecycleOwner) {
             inputUsername.apply {
@@ -49,4 +50,5 @@ class SignInFragment : Fragment() {
     companion object {
         fun newInstance(): SignInFragment = SignInFragment()
     }
+
 }

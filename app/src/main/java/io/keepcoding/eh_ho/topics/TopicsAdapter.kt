@@ -1,14 +1,17 @@
 package io.keepcoding.eh_ho.topics
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
-import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.databinding.ViewTopicBinding
 import io.keepcoding.eh_ho.extensions.inflater
 import io.keepcoding.eh_ho.model.Topic
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+import java.util.*
 
 class TopicsAdapter(diffUtilItemCallback: DiffUtil.ItemCallback<Topic> = DIFF) :
     ListAdapter<Topic, TopicsAdapter.TopicViewHolder>(diffUtilItemCallback) {
@@ -22,8 +25,11 @@ class TopicsAdapter(diffUtilItemCallback: DiffUtil.ItemCallback<Topic> = DIFF) :
 
     companion object {
         val DIFF = object : DiffUtil.ItemCallback<Topic>() {
-            override fun areItemsTheSame(oldItem: Topic, newItem: Topic): Boolean = oldItem.id == newItem.id
-            override fun areContentsTheSame(oldItem: Topic, newItem: Topic): Boolean = oldItem == newItem
+            override fun areItemsTheSame(oldItem: Topic, newItem: Topic): Boolean =
+                oldItem.id == newItem.id
+
+            override fun areContentsTheSame(oldItem: Topic, newItem: Topic): Boolean =
+                oldItem == newItem
         }
     }
 
@@ -40,13 +46,31 @@ class TopicsAdapter(diffUtilItemCallback: DiffUtil.ItemCallback<Topic> = DIFF) :
             binding.title.text = topic.title
             binding.topicCount.text = topic.postsCount.toString()
             binding.replayCount.text = topic.replyCount.toString()
-            binding.lastPostDate.text = topic.lastPostedAt
-
-            Picasso.get()
-                .load("https://unsplash.com/photos/YNliXm_hMn8")
-                .placeholder(R.drawable.user_icon)
-                .error(R.drawable.error)
-                .into(binding.avatarImage)
+            binding.lastPostDate.text = dateFormating(topic.lastPostedAt)
         }
+
+//        fun bindAvatar(user: User) {
+//            val avatarUrl: String = "https://mdiscourse.keepcoding.io ${user.userAvatar}"
+//
+//            Picasso.get()
+//                .load(avatarUrl)
+//                .placeholder(R.drawable.user_icon)
+//                .error(R.drawable.error)
+//                .into(binding.avatarImage)
+//        }
     }
+
+}
+
+@SuppressLint("NewApi")
+fun dateFormating(date: String): String{
+    val dateAdapted = date.replace("Z", "0")
+    val espDate = LocalDateTime
+        .parse(dateAdapted)
+        .toLocalDate().format(
+            DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+                .withLocale( Locale("es", "ES"))
+        )
+    return espDate
+
 }

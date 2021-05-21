@@ -6,6 +6,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
+import com.google.android.material.textfield.TextInputEditText
+import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.databinding.ActivityLoginBinding
 import io.keepcoding.eh_ho.di.DIProvider
 import io.keepcoding.eh_ho.topics.TopicsActivity
@@ -45,4 +48,6 @@ class LoginActivity : AppCompatActivity() {
         startActivity(TopicsActivity.createIntent(this))
         finish()
     }
+
+
 }
