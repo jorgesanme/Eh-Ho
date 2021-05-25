@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.databinding.ViewTopicBinding
 import io.keepcoding.eh_ho.extensions.inflater
 import io.keepcoding.eh_ho.model.Topic
@@ -47,17 +49,19 @@ class TopicsAdapter(diffUtilItemCallback: DiffUtil.ItemCallback<Topic> = DIFF) :
             binding.topicCount.text = topic.postsCount.toString()
             binding.replayCount.text = topic.replyCount.toString()
             binding.lastPostDate.text = dateFormating(topic.lastPostedAt)
+            val image : String = "https://github.com/jorgesanme/MyBlog/blob/master/src/imagenes/aerogenerador.png"
+
+            Picasso.get()
+                .load(image)
+                .placeholder(R.drawable.user_icon)
+                .error(R.drawable.error)
+                .into(binding.avatarImage)
+
         }
 
-//        fun bindAvatar(user: User) {
+
 //            val avatarUrl: String = "https://mdiscourse.keepcoding.io ${user.userAvatar}"
-//
-//            Picasso.get()
-//                .load(avatarUrl)
-//                .placeholder(R.drawable.user_icon)
-//                .error(R.drawable.error)
-//                .into(binding.avatarImage)
-//        }
+
     }
 
 }

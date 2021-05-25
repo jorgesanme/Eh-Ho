@@ -9,11 +9,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import io.keepcoding.eh_ho.common.TextChangedWatcher
+import io.keepcoding.eh_ho.databinding.ActivityLoginBinding
 import io.keepcoding.eh_ho.databinding.FragmentSignInBinding
 
 class SignInFragment : Fragment() {
 
     private val vm: LoginViewModel by activityViewModels()
+    private val binding: ActivityLoginBinding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,7 +27,7 @@ class SignInFragment : Fragment() {
 
         }
         vm.signInData.observe(viewLifecycleOwner) {
-            inputUsername.apply {
+            inputUsername.apply {                
                 setText(it.userName)
                 setSelection(it.userName.length)
 
@@ -44,7 +46,10 @@ class SignInFragment : Fragment() {
         inputPassword.apply {
             addTextChangedListener(TextChangedWatcher(vm::onNewSignInPassword))
         }
-        buttonLogin.setOnClickListener { vm.signIn() }
+        buttonLogin.setOnClickListener {
+// TODO: 24/5/21 se puede comprobar el user y password 
+
+            vm.signIn() }
     }.root
 
     companion object {

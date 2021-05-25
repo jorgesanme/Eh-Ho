@@ -38,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+
     private fun moveTo(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(binding.fragmentContainer.id, fragment)

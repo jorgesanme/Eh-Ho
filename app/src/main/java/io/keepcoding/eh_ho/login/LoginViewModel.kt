@@ -1,9 +1,12 @@
 package io.keepcoding.eh_ho.login
 
 import android.view.View
+import androidx.core.util.PatternsCompat
 import androidx.lifecycle.*
 import io.keepcoding.eh_ho.model.LogIn
 import io.keepcoding.eh_ho.repository.Repository
+import okhttp3.internal.userAgent
+import java.util.regex.Pattern
 
 class LoginViewModel(private val repository: Repository) : ViewModel() {
 
@@ -116,8 +119,38 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
 }
 
 
-private fun LoginViewModel.SignInData.isValid(): Boolean = userName.isNotBlank() && password.isNotBlank()
+private fun LoginViewModel.SignInData.isValid(): Boolean {return userName.isNotBlank() && password.isNotBlank()
+}
 private fun LoginViewModel.SignUpData.isValid(): Boolean = userName.isNotBlank() &&
         email.isNotBlank() &&
         password == confirmPassword &&
         password.isNotBlank()
+
+fun LoginViewModel.isValidEmail(email: String): Boolean {
+    return if(email.isEmpty()){
+        false
+    }else if (!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()){
+        false
+    }else{
+        true
+    }
+}
+fun LoginViewModel.isValidPassword(password: String): Boolean{
+    var passwordRegex = Pattern.compile(
+        "^" +
+                "(?=.*[0-9])" +   // al least 1 number
+                "(?=.*[a-z])" +   // al least 1 lower case letter
+                "(?=.*[A-Z])" +   // al least 1 upper case letter
+                "(?=.*[@#%&/+_!¡?¿])" +    // al least 1 special character
+                "(?=\\s+$)" +      // no white spaces
+                ".{8,})" +          // al least 8 characters
+                "$"
+    )
+    return if(password.isEmpty()){
+        false
+    }else if(!passwordRegex.matcher(password).matches()){
+        false
+    }else{
+        true
+    }
+}
