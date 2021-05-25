@@ -11,13 +11,15 @@ import androidx.core.util.PatternsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import io.keepcoding.eh_ho.common.TextChangedWatcher
+import io.keepcoding.eh_ho.databinding.ActivityLoginBinding
 import io.keepcoding.eh_ho.databinding.FragmentSignUpBinding
 import java.util.regex.Pattern
 
 class SignUpFragment : Fragment() {
 
     private val vm: LoginViewModel by activityViewModels()
-    private lateinit var binding: FragmentSignUpBinding
+    private val binding: ActivityLoginBinding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,14 +67,13 @@ class SignUpFragment : Fragment() {
             val email = inputEmail.text.toString()
             val pass = inputPassword.text.toString()
             val user = inputUsername.text.toString()
-            if (email.isEmpty() || pass.isEmpty()) {
-                inputEmail.error = "Field can not be EMPTY"
-                inputPassword.error ="Field can not be EMPTY"
-
-            } else if (!checkSignUpPattern(email, pass)) {
+            val confirPass = inputConfirmPassword.text.toString()
+            if (!checkSignUpPattern(email, pass, user, confirPass)) {
                 inputEmail.error = "Please enter a valid email Address"
                 inputPassword.error ="Please enter a valid password Patter"
-
+                inputPassword.error = "Please enter a valid password Patter"
+                inputUsername.error = "Please enter a valid User Name"
+// TODO: 25/5/21 create a String value for the text error
             } else {
                 Toast.makeText(binding.root.context, "SignUp Succes", Toast.LENGTH_SHORT).show()
                 println("JcLog: clicking signup button")
@@ -86,8 +87,17 @@ class SignUpFragment : Fragment() {
     }
 
 
-    private fun checkSignUpPattern(userName: String, passWord: String): Boolean {
-        return vm.isValidEmail(userName) && vm.isValidPassword(passWord)
+    private fun checkSignUpPattern(
+        userName: String, 
+        passWord: String, 
+        email: String,
+        confirPass: String
+    ): Boolean {
+        return vm.isValidEmail(email)
+                ||vm.isValidPassword(passWord)
+                ||vm.isValidUserName(userName) 
+                ||vm.isValidPassword(confirPass)
+        
 
     }
 }

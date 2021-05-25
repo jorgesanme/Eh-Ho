@@ -10,14 +10,18 @@ import java.util.regex.Pattern
 
 class LoginViewModel(private val repository: Repository) : ViewModel() {
 
-    private val _state: MutableLiveData<State> = MutableLiveData<State>().apply { postValue(State.SignIn) }
+    private val _state: MutableLiveData<State> =
+        MutableLiveData<State>().apply { postValue(State.SignIn) }
     private val _signInData = MutableLiveData<SignInData>().apply { postValue(SignInData("", "")) }
-    private val _signUpData = MutableLiveData<SignUpData>().apply { postValue(SignUpData("", "", "", "")) }
+    private val _signUpData =
+        MutableLiveData<SignUpData>().apply { postValue(SignUpData("", "", "", "")) }
     val state: LiveData<State> = _state
     val signInData: LiveData<SignInData> = _signInData
     val signUpData: LiveData<SignUpData> = _signUpData
-    val signInEnabled: LiveData<Boolean> = Transformations.map(_signInData) { it?.isValid() ?: false }
-    val signUpEnabled: LiveData<Boolean> = Transformations.map(_signUpData) { it?.isValid() ?: false }
+    val signInEnabled: LiveData<Boolean> =
+        Transformations.map(_signInData) { it?.isValid() ?: false }
+    val signUpEnabled: LiveData<Boolean> =
+        Transformations.map(_signUpData) { it?.isValid() ?: false }
     val loading: LiveData<Boolean> = Transformations.map(_state) {
         when (it) {
             State.SignIn,
@@ -110,7 +114,8 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
         val confirmPassword: String,
     )
 
-    class LoginViewModelProviderFactory(private val repository: Repository) : ViewModelProvider.Factory {
+    class LoginViewModelProviderFactory(private val repository: Repository) :
+        ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T = when (modelClass) {
             LoginViewModel::class.java -> LoginViewModel(repository) as T
             else -> throw IllegalArgumentException("LoginViewModelFactory can only create instances of the LoginViewModel")
@@ -119,38 +124,53 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
 }
 
 
-private fun LoginViewModel.SignInData.isValid(): Boolean {return userName.isNotBlank() && password.isNotBlank()
+private fun LoginViewModel.SignInData.isValid(): Boolean {
+    return userName.isNotBlank() && password.isNotBlank()
 }
+
 private fun LoginViewModel.SignUpData.isValid(): Boolean = userName.isNotBlank() &&
         email.isNotBlank() &&
         password == confirmPassword &&
         password.isNotBlank()
 
 fun LoginViewModel.isValidEmail(email: String): Boolean {
-    return if(email.isEmpty()){
+    return if (email.isEmpty()) {
         false
-    }else if (!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()){
+    } else if (!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()) {
         false
-    }else{
+    } else {
         true
     }
 }
-fun LoginViewModel.isValidPassword(password: String): Boolean{
+
+fun LoginViewModel.isValidPassword(password: String): Boolean {
     var passwordRegex = Pattern.compile(
-        "^" +
-                "(?=.*[0-9])" +   // al least 1 number
-                "(?=.*[a-z])" +   // al least 1 lower case letter
-                "(?=.*[A-Z])" +   // al least 1 upper case letter
-                "(?=.*[@#%&/+_!¡?¿])" +    // al least 1 special character
-                "(?=\\s+$)" +      // no white spaces
-                ".{8,})" +          // al least 8 characters
-                "$"
+        "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$"
+//        "^" +
+//                "(?=.*[0-9])" +   // al least 1 number
+//                "(?=.*[a-z])" +   // al least 1 lower case letter
+//                "(?=.*[A-Z])" +   // al least 1 upper case letter
+//                "(?=.*[@#%&/+_!¡?¿])" +    // al least 1 special character
+//                "(?=\\s+$)" +      // no white spaces
+//                ".{8,})" +          // al least 8 characters
+//                "$"
     )
-    return if(password.isEmpty()){
+    return if (password.isEmpty()) {
         false
-    }else if(!passwordRegex.matcher(password).matches()){
+    } else if (!passwordRegex.matcher(password).matches()) {
         false
-    }else{
+    } else {
+        true
+    }
+}
+
+fun LoginViewModel.isValidUserName(userName: String): Boolean {
+    var userNameRegex = Pattern.compile(
+        "[a-zA-Z0-9].{5,}"
+    )
+    return if (!userNameRegex.matcher(userName).matches()) {
+        false
+    } else {
         true
     }
 }

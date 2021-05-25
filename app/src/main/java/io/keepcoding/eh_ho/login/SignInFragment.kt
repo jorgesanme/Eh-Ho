@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import io.keepcoding.eh_ho.common.TextChangedWatcher
@@ -27,7 +28,7 @@ class SignInFragment : Fragment() {
 
         }
         vm.signInData.observe(viewLifecycleOwner) {
-            inputUsername.apply {                
+            inputUsername.apply {
                 setText(it.userName)
                 setSelection(it.userName.length)
 
@@ -47,13 +48,32 @@ class SignInFragment : Fragment() {
             addTextChangedListener(TextChangedWatcher(vm::onNewSignInPassword))
         }
         buttonLogin.setOnClickListener {
-// TODO: 24/5/21 se puede comprobar el user y password 
+            val userName = inputUsername.text.toString()
+            val password = inputPassword.text.toString()
 
-            vm.signIn() }
+            if (!checkUserPattern(userName)) {
+                inputUsername.error = "Please enter a valid User Name Patter"
+            } else if (!checkPassWordPattern(password)) {
+                inputPassword.error = "Please enter a valid password Patter"
+                // TODO: 25/5/21 create a String value for the text error
+            } else {
+                Toast.makeText(binding.root.context, "ok. Pase usted pa'ntro", Toast.LENGTH_LONG).show()
+                vm.signIn()
+            }
+
+
+        }
     }.root
 
     companion object {
         fun newInstance(): SignInFragment = SignInFragment()
     }
 
+    private fun checkUserPattern(userName: String): Boolean {
+        return vm.isValidUserName(userName)
+    }
+
+    private fun checkPassWordPattern(password: String): Boolean {
+        return vm.isValidPassword(password)
+    }
 }
