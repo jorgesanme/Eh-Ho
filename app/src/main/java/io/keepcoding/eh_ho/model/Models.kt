@@ -5,6 +5,11 @@ sealed class LogIn {
     data class Error(val error: String) : LogIn()
 }
 
+sealed class ToastMessage{
+    data class Success(val succes: String): ToastMessage()
+    data class Fail (val cascotazo: String): ToastMessage()
+}
+
 data class Topic(
     val id: Int,
     val title: String,
