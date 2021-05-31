@@ -1,14 +1,20 @@
 package io.keepcoding.eh_ho.login
 
+import android.app.Application
+import android.content.Context
 import android.view.View
+import android.widget.Toast
 import androidx.core.util.PatternsCompat
 import androidx.lifecycle.*
 import io.keepcoding.eh_ho.model.LogIn
 import io.keepcoding.eh_ho.repository.Repository
+import kotlinx.coroutines.withContext
 import okhttp3.internal.userAgent
 import java.util.regex.Pattern
 
 class LoginViewModel(private val repository: Repository) : ViewModel() {
+
+
 
     private val _state: MutableLiveData<State> =
         MutableLiveData<State>().apply { postValue(State.SignIn) }
@@ -25,10 +31,10 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
     val loading: LiveData<Boolean> = Transformations.map(_state) {
         when (it) {
             State.SignIn,
-            State.SignedIn,
+            State.SignedIn-> false
             State.SignUp,
             State.SignedUp -> false
-            State.SigningIn,
+            State.SigningIn -> true
             State.SigningUp -> true
         }
     }
@@ -75,11 +81,12 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
 
     fun signIn() {
         signInData.value?.takeIf { it.isValid() }?.let {
+            _state.postValue(State.SigningIn)
             repository.signIn(it.userName, it.password) {
                 if (it is LogIn.Success) {
                     _state.postValue(State.SignedIn)
                 } else {
-                    //
+                    _state.postValue(State.SignIn)
                 }
             }
         }
@@ -87,6 +94,7 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
 
     fun signUp() {
         signUpData.value?.takeIf { it.isValid() }?.let {
+            _state.postValue(State.SigningIn)
             repository.signup(it.userName, it.email, it.password) {
                 //
             }
@@ -174,3 +182,4 @@ fun LoginViewModel.isValidUserName(userName: String): Boolean {
         true
     }
 }
+
