@@ -1,12 +1,16 @@
 package io.keepcoding.eh_ho.login
 
+import android.opengl.Visibility
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import io.keepcoding.eh_ho.common.TextChangedWatcher
@@ -18,11 +22,14 @@ class SignInFragment : Fragment() {
     private val vm: LoginViewModel by activityViewModels()
     private val binding: ActivityLoginBinding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View? = FragmentSignInBinding.inflate(inflater, container, false).apply {
+
         labelCreateAccount.setOnClickListener {
             vm.moveToSignUp()
 
@@ -57,7 +64,7 @@ class SignInFragment : Fragment() {
                 inputPassword.error = "Please enter a valid password Patter"
                 // TODO: 25/5/21 create a String value for the text error
             } else {
-                Toast.makeText(binding.root.context, "ok. Pase usted pa'ntro", Toast.LENGTH_LONG).show()
+                Toast.makeText(binding.root.context, "SignUp Success", Toast.LENGTH_LONG).show()
                 vm.signIn()
             }
 

@@ -53,11 +53,11 @@ class TopicsActivity : AppCompatActivity() {
     private fun iniRefreshListener(){
         val swipeContainer = binding.refresh
         swipeContainer.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            // TODO: 19/5/21  se debe borrar el contenido de las vista y volver a cargarlo
-            // vm.loadTopics()
             val handler = Handler()
             Handler().postDelayed(Runnable{
                 if(swipeContainer.isRefreshing()){
+                    // TODO: 19/5/21  se debe borrar el contenido de las vista y volver a cargarlo
+                    // vm.loadTopics()
                     swipeContainer.isRefreshing = false
                 }
             }, 2000)

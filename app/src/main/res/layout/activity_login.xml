@@ -32,7 +32,8 @@
         <include
             android:id="@+id/viewLoading"
             layout="@layout/view_loading"
-            android:visibility="gone" />
+            android:visibility="gone"
+            />
 
     </FrameLayout>
 

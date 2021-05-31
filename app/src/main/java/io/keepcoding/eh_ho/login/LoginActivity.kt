@@ -37,18 +37,13 @@ class LoginActivity : AppCompatActivity() {
             binding.viewLoading.root.isVisible = it
         }
     }
-
-
     private fun moveTo(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(binding.fragmentContainer.id, fragment)
             .commit()
     }
-
     private fun navigateToTopics() {
         startActivity(TopicsActivity.createIntent(this))
         finish()
     }
-
-
 }

@@ -25,6 +25,7 @@ class TopicsAdapter(diffUtilItemCallback: DiffUtil.ItemCallback<Topic> = DIFF) :
         holder.bind(getItem(position))
 
 
+
     companion object {
         val DIFF = object : DiffUtil.ItemCallback<Topic>() {
             override fun areItemsTheSame(oldItem: Topic, newItem: Topic): Boolean =
@@ -49,32 +50,29 @@ class TopicsAdapter(diffUtilItemCallback: DiffUtil.ItemCallback<Topic> = DIFF) :
             binding.topicCount.text = topic.postsCount.toString()
             binding.replayCount.text = topic.replyCount.toString()
             binding.lastPostDate.text = dateFormating(topic.lastPostedAt)
-            val image : String = "https://github.com/jorgesanme/MyBlog/blob/master/src/imagenes/aerogenerador.png"
-
+            //val avatarUrl: String = "https://mdiscourse.keepcoding.io ${user.userAvatar}"
+            val image1 = "https://www.bookaris.com/images/HA/images/hoteles/129691_fotpe1_web1"
+            val image2 = "https://www.bookaris.com/images/HA/images/hoteles/129691_fotpe1_web1.jpg"
             Picasso.get()
-                .load(image)
+                .load(image1)
                 .placeholder(R.drawable.user_icon)
                 .error(R.drawable.error)
                 .into(binding.avatarImage)
-
         }
 
-
-//            val avatarUrl: String = "https://mdiscourse.keepcoding.io ${user.userAvatar}"
-
     }
-
 }
 
+
+
 @SuppressLint("NewApi")
-fun dateFormating(date: String): String{
+fun dateFormating(date: String): String {
     val dateAdapted = date.replace("Z", "0")
     val espDate = LocalDateTime
         .parse(dateAdapted)
         .toLocalDate().format(
             DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
-                .withLocale( Locale("es", "ES"))
+                .withLocale(Locale("es", "ES"))
         )
     return espDate
-
 }

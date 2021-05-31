@@ -74,6 +74,7 @@ class SignUpFragment : Fragment() {
                 inputPassword.error = "Please enter a valid password Patter"
                 inputUsername.error = "Please enter a valid User Name"
 // TODO: 25/5/21 create a String value for the text error
+// TODO: 26/5/21 separar la deteccion a cada uno de los campos
             } else {
                 Toast.makeText(binding.root.context, "SignUp Succes", Toast.LENGTH_SHORT).show()
                 println("JcLog: clicking signup button")
