@@ -50,7 +50,7 @@ class TopicsAdapter(diffUtilItemCallback: DiffUtil.ItemCallback<Topic> = DIFF) :
             binding.topicCount.text = topic.postsCount.toString()
             binding.replayCount.text = topic.replyCount.toString()
             binding.lastPostDate.text = dateFormating(topic.lastPostedAt)
-            //val avatarUrl: String = "https://mdiscourse.keepcoding.io ${user.userAvatar}"
+            //val avatarUrl: String = "https://mdiscourse.keepcoding.io/ ${user.userAvatar}"
             val image1 = "https://www.bookaris.com/images/HA/images/hoteles/129691_fotpe1_web1"
             val image2 = "https://www.bookaris.com/images/HA/images/hoteles/129691_fotpe1_web1.jpg"
             Picasso.get()
